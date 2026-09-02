@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBites - El Stand Más Top</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #FF85B3;
+            --secondary-pink: #FFE5EC;
+            --dark-pink: #D6336C;
+            --accent-yellow: #FFD43B;
+            --text-dark: #2B2D42;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-pink);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* --- HEADER & HERO --- */
+        header {
+            background: linear-gradient(135deg, #FF85B3, #FF6B9B);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-top: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: #333;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark-pink);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        /* --- SECCIÓN MENÚ --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(214, 51, 108, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            color: var(--dark-pink);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.8rem;
+        }
+
+        .btn-add {
+            background-color: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .btn-add:hover {
+            background-color: #b02152;
+        }
+
+        /* --- EQUIPO --- */
+        .team-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .member-chip {
+            background: var(--secondary-pink);
+            padding: 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            color: var(--dark-pink);
+            border: 2px solid var(--primary-pink);
+        }
+
+        /* --- DETALLES DEL EVENTO --- */
+        .event-info {
+            background: linear-gradient(135deg, #2B2D42, #3D405B);
+            color: white;
+            padding: 2rem;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .event-info h3 {
+            color: var(--accent-yellow);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- BOTÓN FLOTANTE Y MODAL DE CARRITO --- */
+        .cart-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 800;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .btn-send {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn-close {
+            background: #ccc;
+            color: #333;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            border-radius: 10px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="Logo Quick Bites.jpeg" style="width:130px; height:130px; border-radius:50%; object-fit:cover;">
+        <h1>QuickBites</h1>
+        <p>¡El toque dulce y refrescante que necesitabas hoy!</p>
+        <div class="badge">📍 Próximamente en el Gimnasio</div>
+    </header>
+
+    <div class="container">
+
+        <h2 class="section-title">🔥 Nuestro Menú del Día</h2>
+        <div class="menu-grid">
+            
+            <div class="card">
+                <div>
+                    <div class="card-icon"><img src="churros.png" style="width:120px; height:120px; object-fit:cover;"></div>
+                    <h3>Churros Preparados</h3>
+                    <p>Crujientes, calientitos y cargados con los mejores toppings. (Orden de 3)</p>
+                    <h4>L. 30.00</h4>
+                </div>
+                <button class="btn-add" onclick="agregarAlCarrito('Churros Preparados (3 uds)', 30)">🛒 Agregar al Carrito</button>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon"><img src="brownies.png" style="width:120px; height:120px; object-fit:cover;"></div>
+                    <h3>Brownie Clásico</h3>
+                    <p>Súper chocolatoso, suave y con la textura perfecta.</p>
+                    <h4>L. 30.00</h4>
+                </div>
+                <button class="btn-add" onclick="agregarAlCarrito('Brownie Clásico', 30)">🛒 Agregar al Carrito</button>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon"><img src="brownies.png" style="width:120px; height:120px; object-fit:cover;"></div>
+                    <h3>Brownie con Topping</h3>
+                    <p>Con topping a elección (chocolate, malvavisco, Oreo).</p>
+                    <h4>L. 38.00</h4>
+                </div>
+                <button class="btn-add" onclick="agregarAlCarrito('Brownie con Topping', 38)">🛒 Agregar al Carrito</button>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon"><img src="chocobananos.png" style="width:100px; height:100px; object-fit:cover;"></div>
+                    <h3>Chocobanano</h3>
+                    <p>Un antojito dulce con toppings de chispas, Oreo y galleta.</p>
+                    <h4>L. 25.00</h4>
+                </div>
+                <button class="btn-add" onclick="agregarAlCarrito('Chocobanano', 25)">🛒 Agregar al Carrito</button>
+            </div>
+
+        </div>
+
+        <div class="team-section">
+            <h2 class="section-title">✨ Conoce al Equipo</h2>
+            <div class="team-grid">
+                <div class="member-chip"><img src="dafny.jpg" style="width: 95px; height: 140px; object-fit:cover;"><br>Dafny Norales</div>
+                <div class="member-chip"><img src="darlene.jpg" style="width: 85px; height: 130px; object-fit:cover;"><br>Darlene Luna</div>
+                <div class="member-chip"><img src="rosa.jpg" style="width: 90px; height: 130px; object-fit:cover;"><br>Rosa Zelaya</div>
+                <div class="member-chip"><img src="rosio.jpg" style="width: 80px; height: 110px; object-fit:cover;"><br>Rosio Ramos</div>
+                <div class="member-chip"><img src="savis.jpg" style="width: 90px; height: 130px; object-fit:cover;"><br>Savis Funez</div>
+                <div class="member-chip"><img src="valery.jpg" style="width: 80px; height: 120px; object-fit:cover;"><br>Valery Osorio</div>
+            </div>
+        </div>
+
+        <div class="event-info">
+            <h3>🎪 ¡Visítanos en el Gimnasio!</h3>
+            <p>Estaremos ofreciendo los mejores snacks durante la feria. ¡No te quedes sin probar tus <strong>QuickBites</strong>!</p>
+        </div>
+
+    </div>
+
+    <button class="cart-float" onclick="abrirCarrito()">
+        🛒 Mi Carrito (<span id="cart-count">0</span>)
+    </button>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <h3 style="color: var(--dark-pink); margin-bottom: 1rem;">🛍️ Tu Pedido</h3>
+            <div id="cart-items">
+                </div>
+            <hr style="margin: 1rem 0;">
+            <h4>Total: L. <span id="cart-total">0.00</span></h4>
+            
+            <button class="btn-send" onclick="enviarWhatsApp()">📲 Confirmar por WhatsApp</button>
+            <button class="btn-close" onclick="cerrarCarrito()">Cerrar</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 QuickBites</p>
+    </footer>
+
+    <script>
+        // CONFIGURACIÓN: Reemplaza este número con el tuyo (código de país + número, ej: 50412345678)
+        const TELEFONO_WHATSAPP = "50492917967";
+
+        let carrito = [];
+
+        function agregarAlCarrito(producto, precio) {
+            const itemExistente = carrito.find(item => item.producto === producto);
+            if (itemExistente) {
+                itemExistente.cantidad++;
+            } else {
+                carrito.push({ producto, precio, cantidad: 1 });
+            }
+            actualizarInterfaz();
+        }
+
+        function actualizarInterfaz() {
+            const count = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+            document.getElementById('cart-count').innerText = count;
+
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+
+            let total = 0;
+
+            if (carrito.length === 0) {
+                container.innerHTML = '<p>El carrito está vacío.</p>';
+            } else {
+                carrito.forEach((item, index) => {
+                    const subtotal = item.precio * item.cantidad;
+                    total += subtotal;
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div>
+                                <strong>${item.producto}</strong><br>
+                                <small>L. ${item.precio} x ${item.cantidad}</small>
+                            </div>
+                            <div>
+                                <span>L. ${subtotal}</span>
+                                <button onclick="eliminarDelCarrito(${index})" style="background:red; color:white; border:none; border-radius:5px; padding:2px 6px; margin-left:8px; cursor:pointer;">X</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarInterfaz();
+        }
+
+        function abrirCarrito() {
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        function cerrarCarrito() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        function enviarWhatsApp() {
+            if (carrito.length === 0) {
+                alert('Añade al menos un producto al carrito antes de pedir.');
+                return;
+            }
+
+            let mensaje = "¡Hola QuickBites! 👋 Quisiera hacer el siguiente pedido:\n\n";
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+                mensaje += `• ${item.cantidad}x ${item.producto} - L. ${subtotal}\n`;
+            });
+
+            mensaje += `\n*Total a pagar:* L. ${total.toFixed(2)}\n\n¡Quedo a la espera de la confirmación!`;
+
+            const url = `https://wa.me/${TELEFONO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
